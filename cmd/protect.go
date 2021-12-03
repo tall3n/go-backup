@@ -37,7 +37,7 @@ func init() {
 
 	protectCmd.Flags().StringVarP(&options.Filter, "filter", "f", "", "Resource to protect - tag:<tag-name>=<tag-value")
 	protectCmd.Flags().StringSliceVarP(&options.ResourceTypes, "resource-types", "r", options.ResourceTypes, "Resource Types - dynamodb,instance,volume,efs,fsx,rds-cluster,rds-db, storage-gateway")
-
+	protectCmd.Flags().BoolVarP(&options.DryRun, "dry-run", "d", false, "Perform Dry Run to show what would have happened.")
 	protectCmd.MarkFlagRequired("filter")
 	protectCmd.MarkFlagRequired("resource-types")
 }

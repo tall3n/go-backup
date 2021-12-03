@@ -9,9 +9,10 @@ type CommandLineArgs struct {
 	SecretAccessKey string
 	// Filter
 	Filter string
-
 	//Prefix - Unique prefix for all resources
 	Prefix string
 
 	ResourceTypes []string
+
+	DryRun bool
 }

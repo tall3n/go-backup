@@ -20,6 +20,8 @@ func Run(args internal.CommandLineArgs) {
 	filters := internal.AWSFilter(args.Filter)
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
+	var tasks []string
+
 	if err != nil {
 		panic(err)
 	}
@@ -33,6 +35,9 @@ func Run(args internal.CommandLineArgs) {
 
 	accountID := *stsOutput.Account
 
+	if args.DryRun {
+		tasks = append(tasks, "Ensure Vault")
+	}
 	err = internal.EnsureVault(args.Prefix)
 
 	// Create Backup Plan
@@ -55,6 +60,9 @@ func Run(args internal.CommandLineArgs) {
 		log.Fatalf("Unable to get instances %v", err)
 	}
 
+	if args.DryRun {
+		tasks = append(tasks, "Ensure Vault")
+	}
 	err = internal.EnsureBackupPlanSelection(args.Prefix, accountID, backupPlanID, args.ResourceTypes)
 	if err != nil {
 		if strings.Contains(err.Error(), "already exists") {
